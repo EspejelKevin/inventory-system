@@ -35,11 +35,11 @@ class DBRepositoryProduct(IDatabaseProduct):
             cursor.execute(query, (id,))
             return cursor.fetchone()
 
-    def get_product_by_sku(self, sku):
+    def get_product_by_name(self, name):
         with self.db_session() as session:
             client: Connection = session.get_client()
             cursor: Cursor = client.cursor()
-            cursor.execute('SELECT * FROM Product WHERE sku=%s', (sku,))
+            cursor.execute('SELECT * FROM Product WHERE name=%s', (name,))
             return cursor.fetchone()
 
     def create_product(self, product: ProductInput):

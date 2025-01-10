@@ -11,8 +11,8 @@ class DBServiceProduct(IDatabaseProduct):
     def get_product_by_id(self, id):
         return self.db_repository.get_product_by_id(id)
 
-    def get_product_by_sku(self, sku):
-        return self.db_repository.get_product_by_sku(sku)
+    def get_product_by_name(self, name):
+        return self.db_repository.get_product_by_name(name)
 
     def create_product(self, product):
         return self.db_repository.create_product(product)

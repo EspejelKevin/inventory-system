@@ -7,8 +7,11 @@ class ProductInput(BaseModel):
     cost: float
     price: float
     stock: int
-    sku: str
     category_id: int
+
+
+class Product(ProductInput):
+    sku: str
 
 
 class ProductOutput(BaseModel):

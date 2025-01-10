@@ -9,13 +9,16 @@ class InventoryInput(BaseModel):
     description: str
     movement_type: str
     product_id: int
+
+
+class Inventory(InventoryInput):
     code: str
 
 
 class InventoryOutput(BaseModel):
     id: int
     quantity: int
-    update_date: date
+    update_date: date = date.today()
     description: str
     movement_type: str
     product: str

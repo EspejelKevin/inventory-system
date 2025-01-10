@@ -11,7 +11,7 @@ class IDatabaseProduct(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def get_product_by_sku(self, sku: str):
+    def get_product_by_name(self, name: str):
         raise NotImplementedError
 
     @abstractmethod

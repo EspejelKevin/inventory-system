@@ -4,7 +4,7 @@ from datetime import datetime
 from fastapi import status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-from schemas import ProductInput, ProductOutput
+from schemas import Product, ProductInput, ProductOutput
 from services import IDatabaseProduct
 
 
@@ -37,13 +37,14 @@ class ProductController:
         return JSONResponse(jsonable_encoder(self.response), status.HTTP_200_OK)
 
     def create_product(self, product: ProductInput) -> JSONResponse:
-        product_db = self.db_service.get_product_by_sku(product.sku)
+        product_db = self.db_service.get_product_by_name(product.name)
 
         if product_db:
             self.response['message'] = f'Product {
                 product.name} already exists.'
             return JSONResponse(jsonable_encoder(self.response), status.HTTP_409_CONFLICT)
 
+        product = Product(**product.model_dump(), sku=str(uuid.uuid4())[0:8])
         if not self.db_service.create_product(product):
             self.response['message'] = f'Error while inserting product {
                 product.name}'
