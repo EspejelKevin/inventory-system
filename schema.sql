@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS Inventory(
     description VARCHAR(100) NOT NULL,
     movement_type VARCHAR(50) NOT NULL,
     product_id INT NOT NULL,
+    code VARCHAR(255) NOT NULL UNIQUE,
     CONSTRAINT fk_product_inventory
     FOREIGN KEY (product_id) 
     REFERENCES Product(id) ON DELETE CASCADE

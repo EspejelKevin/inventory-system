@@ -4,5 +4,9 @@ from .client.db_service import DBServiceClient
 from .client.idatabase import IDatabaseClient
 from .healthcheck.db_service import DBServiceHealthCheck
 from .healthcheck.idatabase import IDatabaseHealthCheck
+from .inventory.db_service import DBServiceInventory
+from .inventory.idatabase import IDatabaseInventory
 from .product.db_service import DBServiceProduct
 from .product.idatabase import IDatabaseProduct
+from .seller.db_service import DBServiceSeller
+from .seller.idatabase import IDatabaseSeller

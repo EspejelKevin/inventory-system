@@ -3,7 +3,7 @@ import uvicorn
 from config import get_config
 from fastapi import FastAPI
 from routes import (category_router, client_router, healthcheck_router,
-                    product_router)
+                    inventory_router, product_router, seller_router)
 
 tags = [
     {
@@ -53,6 +53,8 @@ app.include_router(healthcheck_router)
 app.include_router(category_router)
 app.include_router(product_router)
 app.include_router(client_router)
+app.include_router(seller_router)
+app.include_router(inventory_router)
 
 
 if __name__ == '__main__':
