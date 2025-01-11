@@ -12,21 +12,41 @@ class DBRepositoryInventory(IDatabaseInventory):
         with self.db_session() as session:
             client: Connection = session.get_client()
             cursor: Cursor = client.cursor()
-            cursor.execute('SELECT * FROM Inventory')
+            query = """
+                SELECT i.id, i.quantity, i.update_date, i.description, i.movement_type, p.name, i.code
+                FROM inventory as i 
+                INNER JOIN product as p
+                ON i.product_id = p.id;
+            """
+            cursor.execute(query)
             return cursor.fetchall()
 
     def get_inventory_by_id(self, id: int):
         with self.db_session() as session:
             client: Connection = session.get_client()
             cursor: Cursor = client.cursor()
-            cursor.execute('SELECT * FROM Inventory WHERE id=%s', (id,))
+            query = """
+                SELECT i.id, i.quantity, i.update_date, i.description, i.movement_type, p.name, i.code
+                FROM inventory as i 
+                INNER JOIN product as p
+                ON i.product_id = p.id
+                WHERE i.id=%s;
+            """
+            cursor.execute(query, (id,))
             return cursor.fetchone()
 
     def get_inventory_by_code(self, code: str):
         with self.db_session() as session:
             client: Connection = session.get_client()
             cursor: Cursor = client.cursor()
-            cursor.execute('SELECT * FROM Inventory WHERE code=%s', (code,))
+            query = """
+                SELECT i.id, i.quantity, i.update_date, i.description, i.movement_type, p.name, i.code
+                FROM inventory as i 
+                INNER JOIN product as p
+                ON i.product_id = p.id
+                WHERE i.code=%s;
+            """
+            cursor.execute(query, (code,))
             return cursor.fetchone()
 
     def create_inventory(self, inventory: InventoryInput) -> bool:
@@ -62,7 +82,7 @@ class DBRepositoryInventory(IDatabaseInventory):
         except Exception:
             return False
 
-    def delete_client(self, id):
+    def delete_inventory(self, id):
         try:
             with self.db_session() as session:
                 client: Connection = session.get_client()

@@ -14,6 +14,9 @@ class DBServiceInventory(IDatabaseInventory):
     def get_inventory_by_code(self, code):
         return self.db_repository.get_inventory_by_code(code)
 
+    def create_inventory(self, inventory):
+        return self.db_repository.create_inventory(inventory)
+
     def update_inventory(self, id, inventory):
         return self.db_repository.update_inventory(id, inventory)
 

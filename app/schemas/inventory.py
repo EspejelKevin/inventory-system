@@ -9,9 +9,6 @@ class InventoryInput(BaseModel):
     description: str
     movement_type: str
     product_id: int
-
-
-class Inventory(InventoryInput):
     code: str
 
 

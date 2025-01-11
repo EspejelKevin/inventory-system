@@ -37,7 +37,7 @@ class ClientController:
             phone=client[3], address=client[4], email=client[5])
         return JSONResponse(jsonable_encoder(self.response), status.HTTP_200_OK)
 
-    def get_client_by_phone(self, phone: int) -> JSONResponse:
+    def get_client_by_phone(self, phone: str) -> JSONResponse:
         client = self.db_service.get_client_by_phone(phone)
 
         if not client:
@@ -49,7 +49,7 @@ class ClientController:
             phone=client[3], address=client[4], email=client[5])
         return JSONResponse(jsonable_encoder(self.response), status.HTTP_200_OK)
 
-    def get_client_by_email(self, email: int) -> JSONResponse:
+    def get_client_by_email(self, email: str) -> JSONResponse:
         client = self.db_service.get_client_by_email(email)
 
         if not client:

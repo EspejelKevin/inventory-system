@@ -23,6 +23,13 @@ def get_inventory_by_id(id: int) -> JSONResponse:
         return inventory_controller.get_inventory_by_id(id)
 
 
+@inventory_router.get('/inventories/code/{code}', tags=['Inventory'])
+def get_inventory_by_code(code: str) -> JSONResponse:
+    with container.MainContainer.scope() as app:
+        inventory_controller = app.controllers.inventory()
+        return inventory_controller.get_inventory_by_code(code)
+
+
 @inventory_router.post('/inventories', tags=['Inventory'])
 def create_inventory(inventory: InventoryInput) -> JSONResponse:
     with container.MainContainer.scope() as app:

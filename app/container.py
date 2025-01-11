@@ -3,13 +3,15 @@ from typing import Optional
 
 from config import Config
 from controllers import (CategoryController, ClientController,
-                         ProductController, ReadinessController)
+                         InventoryController, ProductController,
+                         ReadinessController, SellerController)
 from database import Database
 from dependency_injector import containers, providers
 from repositories import (DBRepositoryCategory, DBRepositoryClient,
-                          DBRepositoryHealthCheck, DBRepositoryProduct)
+                          DBRepositoryHealthCheck, DBRepositoryInventory,
+                          DBRepositoryProduct, DBRepositorySeller)
 from services import (DBServiceCategory, DBServiceClient, DBServiceHealthCheck,
-                      DBServiceProduct)
+                      DBServiceInventory, DBServiceProduct, DBServiceSeller)
 
 
 class ContainerDatabases(containers.DeclarativeContainer):
@@ -28,6 +30,10 @@ class ContainerRepositories(containers.DeclarativeContainer):
         DBRepositoryProduct, db_session=databases.mysql.provided.session)
     db_repository_client = providers.Singleton(
         DBRepositoryClient, db_session=databases.mysql.provided.session)
+    db_repository_seller = providers.Singleton(
+        DBRepositorySeller, db_session=databases.mysql.provided.session)
+    db_repository_inventory = providers.Singleton(
+        DBRepositoryInventory, db_session=databases.mysql.provided.session)
 
 
 class ContainerServices(containers.DeclarativeContainer):
@@ -40,6 +46,10 @@ class ContainerServices(containers.DeclarativeContainer):
         DBServiceProduct, db_repository=repositories.db_repository_product)
     db_service_client = providers.Factory(
         DBServiceClient, db_repository=repositories.db_repository_client)
+    db_service_seller = providers.Factory(
+        DBServiceSeller, db_repository=repositories.db_repository_seller)
+    db_service_inventory = providers.Factory(
+        DBServiceInventory, db_repository=repositories.db_repository_inventory)
 
 
 class ContainerControllers(containers.DeclarativeContainer):
@@ -53,6 +63,12 @@ class ContainerControllers(containers.DeclarativeContainer):
     )
     client = providers.Factory(
         ClientController, db_service=services.db_service_client
+    )
+    seller = providers.Factory(
+        SellerController, db_service=services.db_service_seller
+    )
+    inventory = providers.Factory(
+        InventoryController, db_service=services.db_service_inventory
     )
 
 
